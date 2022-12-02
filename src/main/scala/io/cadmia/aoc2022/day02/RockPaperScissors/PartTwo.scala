@@ -4,12 +4,12 @@ import scala.collection.immutable.HashMap
 import scala.io.Source
 
 object PartTwo extends RockPaperScissors {
-  private def getYouPlayed(outcome: String, opponent: String): String = {
+  private def getPlayerMove(outcome: String, opponentMove: String): String = {
     outcome match
-      case "draw" => opponent
-      case "lose" => wins(opponent)
-      case "win" => loses(opponent)
-      case _ => throw new Exception("Invalid input to getYouPlayed")
+      case "draw" => opponentMove
+      case "lose" => getLosesAgainstMove(opponentMove)
+      case "win" => getWinsAgainstMove(opponentMove)
+      case _ => throw new Exception("Invalid input to getPlayerMove")
   }
 
   def decryptCheatsheet(code: String): String  = {
@@ -24,11 +24,9 @@ object PartTwo extends RockPaperScissors {
   }
 
   def calculateScore(game: Array[String]): Int = {
-    val Array(colOne, colTwo) = game
-    val opponent = decryptCheatsheet(colOne)
-    val outcome = decryptCheatsheet(colTwo)
-    val you = getYouPlayed(outcome, opponent)
+    val Array(opponentMove, outcome) = game.map(decryptCheatsheet)
+    val playerMove = getPlayerMove(outcome, opponentMove)
 
-    getTotalScore(you, outcome)
+    getTotalScore(playerMove, outcome)
   }
 }

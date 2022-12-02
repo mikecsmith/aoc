@@ -3,32 +3,35 @@ package io.cadmia.aoc2022.day02.RockPaperScissors
 import scala.collection.immutable.HashMap
 
 trait RockPaperScissors {
+  def decryptCheatsheet(code: String): String
+  def calculateScore(game: Array[String]): Int
+
   private val rock = ("scissors", "paper")
   private val scissors = ("paper", "rock")
   private val paper = ("rock", "scissors")
 
-  def loses(gesture: String): String = {
-    gesture match
+  def getWinsAgainstMove(move: String): String = {
+    move match
       case "rock" => rock(1)
       case "paper" => paper(1)
       case "scissors" => scissors(1)
-      case _ => throw new Exception("Invalid input to losesAgainst")
+      case _ => throw new Exception("Invalid input to getWinsAgainstMove")
   }
 
-  def wins(gesture: String): String = {
-    gesture match
+  def getLosesAgainstMove(move: String): String = {
+    move match
       case "rock" => rock(0)
       case "paper" => paper(0)
       case "scissors" => scissors(0)
-      case _ => throw new Exception("Invalid input to winsAgainst")
+      case _ => throw new Exception("Invalid input to getLosesAgainstMove")
   }
 
-  private def getChoiceScore(youPlayed: String): Int = {
-    youPlayed match
+  private def getPlayerMoveScore(move: String): Int = {
+    move match
       case "rock" => 1
       case "paper" => 2
       case "scissors" => 3
-      case _ => throw new Exception("Invalid input to getChoiceScore")
+      case _ => throw new Exception("Invalid input to getPlayerMoveScore")
   }
 
   private def getGameScore(outcome: String): Int = {
@@ -39,5 +42,5 @@ trait RockPaperScissors {
       case _ => throw new Exception("Invalid input to getGameScore")
   }
 
-  def getTotalScore(youPlayed: String, outcome: String): Int = getChoiceScore(youPlayed) + getGameScore(outcome)
+  def getTotalScore(playerMove: String, outcome: String): Int = getPlayerMoveScore(playerMove) + getGameScore(outcome)
 }

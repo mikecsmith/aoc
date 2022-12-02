@@ -6,19 +6,19 @@ import scala.collection.immutable.HashMap
 import scala.io.Source
 
 object PartOne extends RockPaperScissors {
-  private def getOutcome(youPlayed: String, opponentPlayed: String): String = {
-    if youPlayed == opponentPlayed then
+  private def getGameOutcome(playerMove: String, opponentMove: String): String = {
+    if playerMove == opponentMove then
       "draw"
-    else if youPlayed == loses(opponentPlayed) then
+    else if playerMove == getWinsAgainstMove(opponentMove) then
       "win"
-    else if youPlayed == wins(opponentPlayed) then
+    else if playerMove == getLosesAgainstMove(opponentMove) then
       "lose"
     else
-      throw new Exception("getOutcome unable to determine outcome")
+      throw new Exception("getOutcome unable to determine getGameOutcome")
   }
 
-  def decryptCheatsheet(letter: String): String = {
-    letter match
+  def decryptCheatsheet(code: String): String = {
+    code match
       case "A" | "X" => "rock"
       case "B" | "Y" => "paper"
       case "C" | "Z" => "scissors"
@@ -26,8 +26,8 @@ object PartOne extends RockPaperScissors {
   }
 
   def calculateScore(game: Array[String]): Int = {
-    val Array(opponentPlayed, youPlayed) = game.map(decryptCheatsheet)
-    val outcome = getOutcome(youPlayed, opponentPlayed)
-    getTotalScore(youPlayed, outcome)
+    val Array(opponetMove, playerMove) = game.map(decryptCheatsheet)
+    val outcome = getGameOutcome(playerMove, opponetMove)
+    getTotalScore(playerMove, outcome)
   }
 }
