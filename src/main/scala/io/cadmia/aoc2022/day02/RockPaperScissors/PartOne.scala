@@ -1,7 +1,5 @@
 package io.cadmia.aoc2022.day02.RockPaperScissors
 
-import io.cadmia.aoc2022.day02
-
 import scala.collection.immutable.HashMap
 import scala.io.Source
 
