@@ -1,6 +1,5 @@
 package io.cadmia.aoc2022.day01
 
-import scala.collection.mutable.ListBuffer
 import scala.io.Source
 import scala.util.Try
 
