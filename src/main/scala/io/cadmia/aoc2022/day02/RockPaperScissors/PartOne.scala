@@ -15,7 +15,7 @@ object PartOne extends RockPaperScissors {
       throw new Exception("getOutcome unable to determine getGameOutcome")
   }
 
-  def decryptCheatsheet(code: String): String = {
+  protected def decryptCheatsheet(code: String): String = {
     code match
       case "A" | "X" => "rock"
       case "B" | "Y" => "paper"

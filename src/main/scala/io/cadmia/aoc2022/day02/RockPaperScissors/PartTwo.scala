@@ -12,7 +12,7 @@ object PartTwo extends RockPaperScissors {
       case _ => throw new Exception("Invalid input to getPlayerMove")
   }
 
-  def decryptCheatsheet(code: String): String  = {
+  protected def decryptCheatsheet(code: String): String  = {
     code match
       case "A" => "rock"
       case "B" => "paper"

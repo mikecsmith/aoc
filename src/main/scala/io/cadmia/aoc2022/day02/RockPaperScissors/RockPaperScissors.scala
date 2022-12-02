@@ -3,7 +3,7 @@ package io.cadmia.aoc2022.day02.RockPaperScissors
 import scala.collection.immutable.HashMap
 
 trait RockPaperScissors {
-  def decryptCheatsheet(code: String): String
+  protected def decryptCheatsheet(code: String): String
   def calculateScore(game: Array[String]): Int
 
   private val rock = ("scissors", "paper")
