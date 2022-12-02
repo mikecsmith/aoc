@@ -42,5 +42,5 @@ trait RockPaperScissors {
       case _ => throw new Exception("Invalid input to getGameScore")
   }
 
-  def getTotalScore(playerMove: String, outcome: String): Int = getPlayerMoveScore(playerMove) + getGameScore(outcome)
+  def getScore(playerMove: String, outcome: String): Int = getPlayerMoveScore(playerMove) + getGameScore(outcome)
 }

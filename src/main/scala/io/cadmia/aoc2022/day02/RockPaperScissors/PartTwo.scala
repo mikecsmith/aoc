@@ -27,6 +27,6 @@ object PartTwo extends RockPaperScissors {
     val Array(opponentMove, outcome) = game.map(decryptCheatsheet)
     val playerMove = getPlayerMove(outcome, opponentMove)
 
-    getTotalScore(playerMove, outcome)
+    getScore(playerMove, outcome)
   }
 }

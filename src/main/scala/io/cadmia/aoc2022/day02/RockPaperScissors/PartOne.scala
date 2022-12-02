@@ -26,6 +26,6 @@ object PartOne extends RockPaperScissors {
   def calculateScore(game: Array[String]): Int = {
     val Array(opponetMove, playerMove) = game.map(decryptCheatsheet)
     val outcome = getGameOutcome(playerMove, opponetMove)
-    getTotalScore(playerMove, outcome)
+    getScore(playerMove, outcome)
   }
 }
