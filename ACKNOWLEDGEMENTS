@@ -1,0 +1,3 @@
+Thanks to:
+
+- jbullock - for pointing out `Source.fromResource().getLines` as a way of lazy loading files and validating project structure
