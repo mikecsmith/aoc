@@ -1,46 +1,104 @@
 package io.cadmia.aoc2022.day02.RockPaperScissors
 
-import scala.collection.immutable.HashMap
+//Enums
+enum Move:
+  case Rock, Paper, Scissors
 
-trait RockPaperScissors {
-  protected def decryptCheatsheet(code: String): String
-  def calculateScore(game: Array[String]): Int
+enum Outcome:
+  case Win, Lose, Draw
 
-  private val rock = ("scissors", "paper")
-  private val scissors = ("paper", "rock")
-  private val paper = ("rock", "scissors")
+object RockPaperScissors {
+  // Constants
+  private val rock = (Move.Scissors, Move.Paper)
+  private val scissors = (Move.Paper, Move.Rock)
+  private val paper = (Move.Rock, Move.Scissors)
 
-  def getWinsAgainstMove(move: String): String = {
+  // Private methods
+  private def getWinsAgainstMove(move: Move): Move = {
     move match
-      case "rock" => rock(1)
-      case "paper" => paper(1)
-      case "scissors" => scissors(1)
+      case Move.Rock => rock(1)
+      case Move.Paper => paper(1)
+      case Move.Scissors => scissors(1)
       case _ => throw new Exception("Invalid input to getWinsAgainstMove")
   }
 
-  def getLosesAgainstMove(move: String): String = {
+  private def getLosesAgainstMove(move: Move): Move = {
     move match
-      case "rock" => rock(0)
-      case "paper" => paper(0)
-      case "scissors" => scissors(0)
+      case Move.Rock => rock(0)
+      case Move.Paper => paper(0)
+      case Move.Scissors => scissors(0)
       case _ => throw new Exception("Invalid input to getLosesAgainstMove")
   }
 
-  private def getPlayerMoveScore(move: String): Int = {
+  private def getPlayerMoveScore(move: Move): Int = {
     move match
-      case "rock" => 1
-      case "paper" => 2
-      case "scissors" => 3
+      case Move.Rock => 1
+      case Move.Paper => 2
+      case Move.Scissors => 3
       case _ => throw new Exception("Invalid input to getPlayerMoveScore")
   }
 
-  private def getGameScore(outcome: String): Int = {
+  private def getGameScore(outcome: Outcome): Int = {
     outcome match
-      case "win" => 6
-      case "lose" => 0
-      case "draw" => 3
+      case Outcome.Win => 6
+      case Outcome.Lose => 0
+      case Outcome.Draw => 3
       case _ => throw new Exception("Invalid input to getGameScore")
   }
 
-  def getScore(playerMove: String, outcome: String): Int = getPlayerMoveScore(playerMove) + getGameScore(outcome)
+  private def decryptOpponentMove(code: String): Move = {
+    code match
+      case "A" => Move.Rock
+      case "B" => Move.Paper
+      case "C" => Move.Scissors
+      case _ => throw new Exception("Invalid input to decryptOpponentMove")
+  }
+
+  private def decryptPlayerMove(code: String): Move = {
+    code match
+      case "X" => Move.Rock
+      case "Y" => Move.Paper
+      case "Z" => Move.Scissors
+      case _ => throw new Exception("Invalid input to decryptPlayerMove")
+  }
+
+  private def decryptOutcome(code: String): Outcome = {
+    code match
+      case "X" => Outcome.Lose
+      case "Y" => Outcome.Draw
+      case "Z" => Outcome.Win
+      case _ => throw new Exception("Invalid input to decryptOutcome")
+  }
+
+  private def getGameOutcome(playerMove: Move, opponentMove: Move): Outcome = {
+    playerMove match
+      case draw if opponentMove == draw => Outcome.Draw
+      case win if getWinsAgainstMove(opponentMove) == win => Outcome.Win
+      case lose if getLosesAgainstMove(opponentMove) == lose => Outcome.Lose
+      case _ => throw new Exception("getOutcome unable to determine getGameOutcome")
+  }
+  private def getPlayerMove(outcome: Outcome, opponentMove: Move): Move = {
+    outcome match
+      case Outcome.Draw => opponentMove
+      case Outcome.Lose => getLosesAgainstMove(opponentMove)
+      case Outcome.Win => getWinsAgainstMove(opponentMove)
+      case _ => throw new Exception("Invalid input to getPlayerMove")
+  }
+
+  private def getScore(playerMove: Move, outcome: Outcome): Int = getPlayerMoveScore(playerMove) + getGameScore(outcome)
+
+  // Solutions
+  def calculatePartOneScore(game: Array[String]): Int = {
+    val opponentMove = decryptOpponentMove(game(0))
+    val playerMove = decryptPlayerMove(game(1))
+    val outcome = getGameOutcome(playerMove, opponentMove)
+    getScore(playerMove, outcome)
+  }
+
+  def calculatePartTwoScore(game: Array[String]): Int = {
+    val opponentMove = decryptOpponentMove(game(0))
+    val outcome = decryptOutcome(game(1))
+    val playerMove = getPlayerMove(outcome, opponentMove)
+    getScore(playerMove, outcome)
+  }
 }
