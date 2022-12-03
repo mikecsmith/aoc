@@ -8,7 +8,7 @@ case class SnackStash(caloriesSum: Int = 0, leaderboard: Vector[Int] = Vector.fi
 
   def addSnack(snackCalories: String): SnackStash = {
     snackCalories.toIntOption match
-      case None => SnackStash(caloriesSum, updatedLeaderboard)
+      case None => SnackStash(0, updatedLeaderboard)
       case Some(calories) => SnackStash(caloriesSum + calories, leaderboard)
   }
 
