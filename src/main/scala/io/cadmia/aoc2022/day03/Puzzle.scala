@@ -27,13 +27,11 @@ def getDuplicate(rucksack: Rucksack): Char = {
     case _ => throw new Exception("More than one duplicate in input")
 }
 
+lazy val getPriority = getDuplicate.andThen(getPriorityValue)
+
 def makeCharSetFromString(s: String): Set[Char] = {
   s.toCharArray.toSet
 }
-
-// Curried Functions
-lazy val getPriority = getDuplicate.andThen(getPriorityValue)
-lazy val getDuplicatePriorityForLine = makeRucksackCompartments.andThen(getPriority)
 
 // Part One utils
 def makeRucksackCompartments(line: String): Rucksack = {
@@ -42,6 +40,8 @@ def makeRucksackCompartments(line: String): Rucksack = {
   val s2 = makeCharSetFromString(line.substring(midPoint))
   Vector(s1, s2)
 }
+
+lazy val getDuplicatePriorityForLine = makeRucksackCompartments.andThen(getPriority)
 
 // Part Two utils
 def increment = (x: Int) => x + 1
