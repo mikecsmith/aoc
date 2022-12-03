@@ -1,3 +1,4 @@
-Thanks to:
+Huge thanks to:
 
 - jbullock - for pointing out `Source.fromResource().getLines` as a way of lazy loading files and validating project structure
+- zoe-j-m - spotting a silly mistake in my processing logic for Day 1 and helping refactor solution to more idiomatic Scala
