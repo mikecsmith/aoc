@@ -49,15 +49,13 @@ def increment = (x: Int) => x + 1
 def processBadgeLine(badgeState: BadgeState, line: String): BadgeState = {
   val newRucksackContents = makeCharSetFromString(line)
   val updatedRucksacks = badgeState.checkedRucksacks.updated(badgeState.currentElf, newRucksackContents)
-  if badgeState.currentElf == LastElf then
-    val updatedPriority = badgeState.prioritySum + getPriority(updatedRucksacks)
-    BadgeState(updatedPriority, 0, UncheckedRucksack)
-  else
-    BadgeState(badgeState.prioritySum, increment(badgeState.currentElf), updatedRucksacks)
+  badgeState.currentElf match
+    case a if LastElf == a => BadgeState(badgeState.prioritySum + getPriority(updatedRucksacks), 0, UncheckedRucksack)
+    case b if 0 until LastElf contains b => BadgeState(badgeState.prioritySum, increment(badgeState.currentElf), updatedRucksacks)
+    case _ => throw new Exception("currentElf is out of bounds")
 }
 
 // Main
-
 @main def solvePuzzle(): Unit = {
   val (duplicatePrioritySum, badgeState) = Source.fromResource("aoc/2022/day03/input").getLines.foldLeft(0, BadgeState())((acc, line) => {
     val (duplicatePrioritySum, badgeState) = acc
