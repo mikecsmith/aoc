@@ -16,34 +16,34 @@ object RockPaperScissors {
   // Private methods
   private def getWinsAgainstMove(move: Move): Move = {
     move match
-      case Move.Rock => rock(1)
-      case Move.Paper => paper(1)
+      case Move.Rock     => rock(1)
+      case Move.Paper    => paper(1)
       case Move.Scissors => scissors(1)
       case _ => throw new Exception("Invalid input to getWinsAgainstMove")
   }
 
   private def getLosesAgainstMove(move: Move): Move = {
     move match
-      case Move.Rock => rock(0)
-      case Move.Paper => paper(0)
+      case Move.Rock     => rock(0)
+      case Move.Paper    => paper(0)
       case Move.Scissors => scissors(0)
       case _ => throw new Exception("Invalid input to getLosesAgainstMove")
   }
 
   private def getPlayerMoveScore(move: Move): Int = {
     move match
-      case Move.Rock => 1
-      case Move.Paper => 2
+      case Move.Rock     => 1
+      case Move.Paper    => 2
       case Move.Scissors => 3
       case _ => throw new Exception("Invalid input to getPlayerMoveScore")
   }
 
   private def getGameScore(outcome: Outcome): Int = {
     outcome match
-      case Outcome.Win => 6
+      case Outcome.Win  => 6
       case Outcome.Lose => 0
       case Outcome.Draw => 3
-      case _ => throw new Exception("Invalid input to getGameScore")
+      case _            => throw new Exception("Invalid input to getGameScore")
   }
 
   private def decryptOpponentMove(code: String): Move = {
@@ -51,7 +51,7 @@ object RockPaperScissors {
       case "A" => Move.Rock
       case "B" => Move.Paper
       case "C" => Move.Scissors
-      case _ => throw new Exception("Invalid input to decryptOpponentMove")
+      case _   => throw new Exception("Invalid input to decryptOpponentMove")
   }
 
   private def decryptPlayerMove(code: String): Move = {
@@ -59,7 +59,7 @@ object RockPaperScissors {
       case "X" => Move.Rock
       case "Y" => Move.Paper
       case "Z" => Move.Scissors
-      case _ => throw new Exception("Invalid input to decryptPlayerMove")
+      case _   => throw new Exception("Invalid input to decryptPlayerMove")
   }
 
   private def decryptOutcome(code: String): Outcome = {
@@ -67,25 +67,27 @@ object RockPaperScissors {
       case "X" => Outcome.Lose
       case "Y" => Outcome.Draw
       case "Z" => Outcome.Win
-      case _ => throw new Exception("Invalid input to decryptOutcome")
+      case _   => throw new Exception("Invalid input to decryptOutcome")
   }
 
   private def getGameOutcome(playerMove: Move, opponentMove: Move): Outcome = {
     playerMove match
-      case draw if opponentMove == draw => Outcome.Draw
-      case win if getWinsAgainstMove(opponentMove) == win => Outcome.Win
+      case draw if opponentMove == draw                      => Outcome.Draw
+      case win if getWinsAgainstMove(opponentMove) == win    => Outcome.Win
       case lose if getLosesAgainstMove(opponentMove) == lose => Outcome.Lose
-      case _ => throw new Exception("getOutcome unable to determine getGameOutcome")
+      case _ =>
+        throw new Exception("getOutcome unable to determine getGameOutcome")
   }
   private def getPlayerMove(outcome: Outcome, opponentMove: Move): Move = {
     outcome match
       case Outcome.Draw => opponentMove
       case Outcome.Lose => getLosesAgainstMove(opponentMove)
-      case Outcome.Win => getWinsAgainstMove(opponentMove)
-      case _ => throw new Exception("Invalid input to getPlayerMove")
+      case Outcome.Win  => getWinsAgainstMove(opponentMove)
+      case _            => throw new Exception("Invalid input to getPlayerMove")
   }
 
-  private def getScore(playerMove: Move, outcome: Outcome): Int = getPlayerMoveScore(playerMove) + getGameScore(outcome)
+  private def getScore(playerMove: Move, outcome: Outcome): Int =
+    getPlayerMoveScore(playerMove) + getGameScore(outcome)
 
   // Solutions
   def calculatePartOneScore(game: Array[String]): Int = {

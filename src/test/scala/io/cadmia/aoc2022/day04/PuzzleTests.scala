@@ -4,7 +4,9 @@ import org.scalatest.funsuite.AnyFunSuite
 
 class PuzzleTests extends AnyFunSuite {
   // Identical ranges
-  test("calculatePartOneScore & calculatePartTwoScore should return 1 if ranges are identical") {
+  test(
+    "calculatePartOneScore & calculatePartTwoScore should return 1 if ranges are identical"
+  ) {
     val oneIsTwoSingleValue: AssignmentRanges = (1 to 1, 1 to 1)
     assert(calculatePartOneScore(oneIsTwoSingleValue) == 1)
     assert(calculatePartTwoScore(oneIsTwoSingleValue) == 1)
@@ -15,7 +17,9 @@ class PuzzleTests extends AnyFunSuite {
   }
 
   // Contains
-  test("calculatePartOneScore & calculatePartTwoScore should return 1 if range one contains range two") {
+  test(
+    "calculatePartOneScore & calculatePartTwoScore should return 1 if range one contains range two"
+  ) {
     val oneContainsTwo: AssignmentRanges = (1 to 5, 3 to 4)
     assert(calculatePartOneScore(oneContainsTwo) == 1)
     assert(calculatePartTwoScore(oneContainsTwo) == 1)
@@ -29,7 +33,9 @@ class PuzzleTests extends AnyFunSuite {
     assert(calculatePartTwoScore(oneContainsTwoSameStart) == 1)
   }
 
-  test("calculatePartOneScore & calculatePartTwoScore should return 1 if range two contains range one") {
+  test(
+    "calculatePartOneScore & calculatePartTwoScore should return 1 if range two contains range one"
+  ) {
     val oneInsideTwo: AssignmentRanges = (3 to 4, 1 to 5)
     assert(calculatePartOneScore(oneInsideTwo) == 1)
     assert(calculatePartTwoScore(oneInsideTwo) == 1)
@@ -44,7 +50,9 @@ class PuzzleTests extends AnyFunSuite {
   }
 
   // Intersection
-  test("calculatePartOneScore && calculatePartTwoScore should return 0 if ranges do not intersect") {
+  test(
+    "calculatePartOneScore && calculatePartTwoScore should return 0 if ranges do not intersect"
+  ) {
     val oneDifferentToTwo: AssignmentRanges = (1 to 5, 6 to 7)
     assert(calculatePartOneScore(oneDifferentToTwo) == 0)
     assert(calculatePartTwoScore(oneDifferentToTwo) == 0)
