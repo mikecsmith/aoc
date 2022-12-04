@@ -18,6 +18,7 @@ def calculatePartTwoScore(assignmentRanges: AssignmentRanges): Score = if (assig
 def calculatePartScores(assignmentRanges: AssignmentRanges): (Int, Int) = (calculatePartOneScore(assignmentRanges), calculatePartTwoScore(assignmentRanges))
 
 def makeAssignmentRanges(assignments: Assignments): AssignmentRanges = (assignments(0) to assignments(1), assignments(2) to assignments(3))
+
 def processLine(line: String): Assignments = line.split(",").flatMap(range => range.split("-").map(stringToInt)).toVector
 
 lazy val getLineScores = processLine.andThen(makeAssignmentRanges).andThen(calculatePartScores)
