@@ -3,7 +3,7 @@ package io.cadmia.aoc2022.day04
 import scala.io.Source
 
 type Assignments = Vector[Int]
-
+type AssignmentRanges = (Range, Range)
 type Score = 1 | 0
 
 def stringToInt(string: String): Int = {
@@ -14,18 +14,23 @@ def stringToInt(string: String): Int = {
 
 def processLine(line: String): Assignments = line.split(",").flatMap(range => range.split("-").map(stringToInt)).toVector
 
-def isSubOrSuperset(assignments: Assignments): Score = {
-  val assignmentOneRange = assignments(0) to assignments(1)
-  val assignmentTwoRange = assignments(2) to assignments(3)
-  if ((assignmentOneRange containsSlice assignmentTwoRange) || (assignmentTwoRange containsSlice assignmentOneRange)) 1 else 0
-}
+def calculatePartScores(assignmentRanges: AssignmentRanges): (Int, Int) = (calculatePartOneScore(assignmentRanges), calculatePartTwoScore(assignmentRanges))
 
-lazy val getLineScore = processLine.andThen(isSubOrSuperset)
+def makeAssignmentRanges(assignments: Assignments): AssignmentRanges = (assignments(0) to assignments(1), assignments(2) to assignments(3))
+
+def calculatePartOneScore(assignmentRanges: AssignmentRanges): Score = if (assignmentRanges(0).containsSlice(assignmentRanges(1)) || assignmentRanges(1).containsSlice(assignmentRanges(0))) 1 else 0
+
+def calculatePartTwoScore(assignmentRanges: AssignmentRanges): Score = if (assignmentRanges(0).intersect(assignmentRanges(1)).nonEmpty) 1 else 0
+
+lazy val getLineScores = processLine.andThen(makeAssignmentRanges).andThen(calculatePartScores)
 
 @main def solvePuzzle(): Unit = {
-  val score = Source.fromResource("aoc/2022/day04/input").getLines.foldLeft(0)((score, line) => {
-    score + getLineScore(line)
+  val scores = Source.fromResource("aoc/2022/day04/input").getLines.foldLeft(0, 0)((scores, line) => {
+    val (partOneLineScore, partTwoLineScore) = getLineScores(line)
+    val (partOneScoreSum, partTwoScoreSum) = scores
+    (partOneScoreSum + partOneLineScore, partTwoScoreSum + partTwoLineScore)
   })
 
-  println(s"Part one score is: $score")
+  println(s"Part one score is: ${scores(0)}")
+  println(s"Part two score is: ${scores(1)}")
 }
