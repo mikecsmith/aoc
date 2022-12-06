@@ -72,7 +72,7 @@ case class Puzzle(part: 1 | 2) {
       case _ => throw new Exception("Invalid line in input file")
   }
 
-  def solvePuzzle(): String = {
+  def solve(): String = {
     val stacks: Stacks = List()
     val finalStacks = Source
       .fromResource("aoc/2022/day05/input")
@@ -85,9 +85,9 @@ case class Puzzle(part: 1 | 2) {
   }
 }
 
-@main def main(): Unit = {
-  val partOneSolution = Puzzle(1).solvePuzzle()
-  val partTwoSolution = Puzzle(2).solvePuzzle()
+@main def solvePuzzle(): Unit = {
+  val partOneSolution = Puzzle(1).solve()
+  val partTwoSolution = Puzzle(2).solve()
 
   println(s"Part 1 solution: $partOneSolution")
   println(s"Part 2 solution: $partTwoSolution")
