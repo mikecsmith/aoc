@@ -1,0 +1,37 @@
+---
+title: "AoC 2025 - Day 1 Notes"
+date: 2025-12-01
+categories: [Advent of Code, 2025]
+---
+
+## Day 1: Safe Cracking
+
+```{python}
+start_position = 50
+DIALSIZE = 100
+```
+
+We're asked to crack a safe with a rotary dial - key things we're told are:
+
+- The dial has a range from  `0...99`
+- Rotations can either go left or right and are represented as `L26` or `R16` etc.
+- We're given a fixed `start` position of `{python} start_position`
+
+From this we can infer:
+
+- There are `{python} DIALSIZE` unique positions on the dial.
+- Movements to the left can be represented as `negative` numbers.
+- Movements to the right can be represented as `positive` numbers.
+
+### Learnings
+
+- There's a difference between `%` operator and true (Euclidean) modulo  - `%` operates as a remainder and can return negative results.
+- Rust has a really nice `rem_euclid` method for true modulo operations which made this much easier to implement compared to Typescript where I had to do:
+
+```typescript
+export const getEndPosition = (startPosition: number, steps: number): number => {
+  const endPosition = (startPosition + steps) % DialSize;
+  if (endPosition < 0) return endPosition + DialSize;
+  return endPosition;
+};
+```

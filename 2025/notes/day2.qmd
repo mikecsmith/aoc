@@ -1,0 +1,40 @@
+
+---
+title: "AoC 2025 - Day 2 Notes"
+date: 2025-12-02
+categories: [Advent of Code, 2025]
+---
+
+## Day 2: Invalid IDs - Periodicity
+
+Identify invalid product IDs in given ranges.
+
+- Product IDs are provided on a single line - separated by `,` (commas).
+- They are a range - the first ID is the start, the second ID is the end.
+- No leading zeroes in IDs.
+
+Inferred:
+
+- Pattern is used a lot - clue that this is a pattern matching problem so should apply to strings.
+- Part One:
+  - IDs with odd number of digits are always valid.
+- Part Two:
+ - Single digit IDs will always be valid including for odd numbers - solvable with a Set for this case?
+ - Should read up on substring processing algorithms.
+
+### Learnings
+
+- Figured out a horrible solution using lots of loops and a Set for single digit ids
+- Read up on substring pattern matching algorithms - learned about periodicity and rotation for identifying substrings.
+- Found this resource which basically gave the game away: https://algo.monster/liteproblems/459
+  - Take the original string `s`
+  - Concatenate it with itself `s + s`
+  - Remove the first and last character from the new string
+  - Check to see if the original string exists in the modified double string (this is why we removed first and last characters)
+- This works because it effectively creates all possible rotations of the original string.
+
+```plaintext
+Example:     abcabcabc
+Double:      abcabcabcabcabcabc
+Includes:    bc[abcabcabc]abcab
+```
